@@ -441,6 +441,16 @@ public class Feature
   {
     final StringBuffer header_buffer = new StringBuffer(">");
 
+    // The header line should always be unique before the first space
+    header_buffer.append(getSystematicName());
+    header_buffer.append("_");
+    header_buffer.append(getRawFirstBase());
+    header_buffer.append("_");
+    header_buffer.append(getRawLastBase());
+    header_buffer.append("_");
+    header_buffer.append(getDirection());
+    header_buffer.append(" ");
+
     header_buffer.append(getSystematicName());
     header_buffer.append(" ");
     header_buffer.append(getIDString());
@@ -566,6 +576,21 @@ public class Feature
        getLastBaseMarker().getRawPosition() + partial + "forward" :
        getLastBaseMarker().getRawPosition() + ":" +
        getFirstCodingBaseMarker().getRawPosition() + partial + "reverse");
+  }
+  public Integer getLeftPosition()
+  {
+    return getFirstCodingBaseMarker().getRawPosition();
+  }
+  public Integer getRightPosition()
+  {
+    return getLastBaseMarker().getRawPosition();
+  }
+  public String getDirection()
+  {
+    if(getLocation().isComplement())
+      return "-";
+    else
+      return "+";
   }
   
   /**

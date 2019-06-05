@@ -121,8 +121,16 @@ public class FeatureAminoAcidViewer
         small_note = small_note.substring (0, 50);
       }
     }
-
-    final String comment = ">" + small_note + "   - " +
+    // The header line should always be unique before the first space
+    final String header = ">" +
+      getFeature().getSystematicName() +
+      "_" +
+      getFeature().getRawFirstBase() + 
+      "_" +
+      getFeature().getRawLastBase() +
+      "_" +
+      getFeature().getDirection() +
+      " " +
       getFeature ().getFirstBase () + ": " +
       getFeature ().getLastBase () + "  MW: " +
       getFeature ().getMolecularWeight ();
@@ -130,7 +138,7 @@ public class FeatureAminoAcidViewer
     final String sequence =
       getFeature ().getTranslation ().toString ().toUpperCase ();
 
-    sequence_viewer.setSequence (comment, sequence);
+    sequence_viewer.setSequence (header, sequence);
   }
 
 

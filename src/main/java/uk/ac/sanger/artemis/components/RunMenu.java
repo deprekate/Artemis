@@ -179,10 +179,10 @@ public class RunMenu extends SelectionMenu
         {
           final FeatureVector features = selection.getAllFeatures();
           
-          if(features.size() != 1)
+          if(features.size() == 0)
           {
             JOptionPane.showMessageDialog(RunMenu.this,
-                "Select a single feature to send to NCBI for searching.", 
+                "Select at least one feature to send to NCBI for searching.", 
                 "NCBI Search", JOptionPane.INFORMATION_MESSAGE);
             return; 
           }
@@ -191,10 +191,19 @@ public class RunMenu extends SelectionMenu
           try
           {
             if(program.getType() == ExternalProgram.AA_PROGRAM)
-              features.elementAt(0).writeAminoAcidsOfFeature(writer);
+            {
+              for(int i=0; i<features.size(); i++)
+              {
+                features.elementAt(i).writeAminoAcidsOfFeature(writer);
+              }
+            }
             else
-              features.elementAt(0).writeBasesOfFeature(writer);
-            
+            {
+              for(int i=0; i<features.size(); i++)
+              {
+                features.elementAt(i).writeBasesOfFeature(writer);
+              }
+	    }
             writer.close();
             final String data = RunBlastAtNCBI.setData(programName, writer.toString());
             if(data != null)
